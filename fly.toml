@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for winstack on 2023-10-09T13:03:56+10:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "winstack"
+primary_region = "syd"
+console_command = "/code/manage.py shell"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+
+[env]
+  PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[statics]]
+  guest_path = "/code/static"
+  url_prefix = "/static/"
