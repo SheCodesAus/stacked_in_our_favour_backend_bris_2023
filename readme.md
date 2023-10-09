@@ -15,7 +15,7 @@ It is also open to the general public who is interested in attending a SheCodes 
 ### Must Haves
 
 | FEATURE | DESCRIPTION 
-| :-----: | :----------:
+| :----- | :----------
 | Account Creation | Anyone can create an account
 | Log In/ Log Out | Registered users can log in and log out of their accounts. 
 | Permissions | Users will have different access and functionalities based on their privileges or permissions.
@@ -43,7 +43,7 @@ It is also open to the general public who is interested in attending a SheCodes 
 * Forgot password on login page
 
 ## Languages and Frameworks
-| :-----: | :----------:
+| :----- | :----------
 | BACKEND |  Django Rest Framework (DRF) API
 | DATABASE | SQLite 
 | DEPLOYMENT | Fly.io
