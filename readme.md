@@ -4,13 +4,13 @@ WinStack is a platform for the SheCodes community to share their successes, ackn
 
 It provides a safe space for collaboration and reflection within the SheCodes program.
 
-## Target Audience
+## 👥 Target Audience
 
 WinStack is intended for anyone who is a member of the SheCodes program, be it a mentor, volunteer or cohort member. 
 
 It is also open to the general public who is interested in attending a SheCodes workshops, as long as they create a WinStack account.
 
-## Features
+## ⭐ Features
 
 ### Must Haves
 
@@ -42,16 +42,16 @@ It is also open to the general public who is interested in attending a SheCodes 
 * Error handling (e.g. if nearing character limit for sticky notes)
 * Forgot password on login page
 
-## Languages and Frameworks
+## 🔧 Languages and Frameworks
 |        | Tool
 | :----- | :----------
-| BACKEND |  Django Rest Framework (DRF) API
-| DATABASE | SQLite 
-| DEPLOYMENT | Fly.io
-| TESTING | Insomnia
+| *BACKEND* |  Django Rest Framework (DRF) API
+| *DATABASE* | SQLite 
+| *DEPLOYMENT* | Fly.io
+| *TESTING* | Insomnia
 
 
-## Installing and Execution
+## 💻 Installing and Execution
 
 ### FIRST, One Person In The Group Should:
 1. Clone this repo down using `git clone insert_quick_setup_link_here`
