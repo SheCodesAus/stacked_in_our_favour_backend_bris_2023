@@ -50,6 +50,7 @@ It is also open to the general public who is interested in attending a SheCodes 
 | *DEPLOYMENT* | Fly.io
 | *TESTING* | Insomnia
 
+## 📑 Database and API Specification
 
 ## 💻 Installing and Execution
 
