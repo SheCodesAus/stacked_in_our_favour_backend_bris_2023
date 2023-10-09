@@ -43,7 +43,6 @@ It is also open to the general public who is interested in attending a SheCodes 
 * Forgot password on login page
 
 ## Languages and Frameworks
-| :----- | :----------
 | BACKEND |  Django Rest Framework (DRF) API
 | DATABASE | SQLite 
 | DEPLOYMENT | Fly.io
