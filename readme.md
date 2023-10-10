@@ -4,7 +4,7 @@ WinStack is a platform for the SheCodes community to share their successes, ackn
 
 It provides a safe space for collaboration and reflection within the SheCodes program.
 
-## 👥 Target Audience
+## 👥 Target Audience - HEY
 
 WinStack is intended for anyone who is a member of the SheCodes program, be it a mentor, volunteer or cohort member. 
 
