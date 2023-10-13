@@ -9,7 +9,10 @@ class StickyNoteSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    stickyNotes = StickyNoteSerializer(many=True, read_only=True)
     class Meta: 
         model = apps.get_model('events.Event')
         fields = '__all__'
+
+# Event model + list of sticky notes
+class EventDetailSerializer(EventSerializer):
+    stickyNotes = StickyNoteSerializer(many=True, read_only=True)

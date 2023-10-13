@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import status
 from .models import Event, StickyNote
-from .serializers import EventSerializer, StickyNoteSerializer
+from .serializers import EventSerializer, StickyNoteSerializer, EventDetailSerializer
 
 # Handle all events
 class EventList(APIView):
@@ -34,12 +34,12 @@ class EventDetail(APIView):
     
     def get(self,request, pk):
         event = self.get_object(pk)
-        serializer = EventSerializer(event)
+        serializer = EventDetailSerializer(event)
         return Response(serializer.data)
     
     def put(self, request, pk):
         event = self.get_object(pk)
-        serializer = EventSerializer(event, data=request.data, partial=True)
+        serializer = EventDetailSerializer(event, data=request.data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
