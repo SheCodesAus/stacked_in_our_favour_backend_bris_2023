@@ -10,3 +10,14 @@ class Event(models.Model):
     creator = models.CharField(max_length=200)
     image = models.URLField(blank=True)
     isOpen = models.BooleanField(blank=True)
+
+
+class StickyNote(models.Model):
+    noteText = models.CharField(max_length=100)
+    eventId = models.ForeignKey(
+        'Event',
+        on_delete=models.CASCADE,
+        related_name = 'stickyNotes'
+        )
+    authorID = models.CharField(max_length=100)
+    anonymous = models.BooleanField()
