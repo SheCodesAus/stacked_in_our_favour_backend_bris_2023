@@ -69,3 +69,26 @@ class StickyNoteList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class StickyNoteDetail(APIView):
+    
+    def get_object(self, pk):
+        try:
+            return StickyNote.objects.get(pk=pk)
+        except StickyNote.DoesNotExist:
+            raise Http404
+
+    def patch(self, request, pk):
+        stickyNote = self.get_object(pk)
+        serializer = StickyNoteSerializer(stickyNote, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self,request, pk):
+        stickyNote = self.get_object(pk)
+        stickyNote.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
