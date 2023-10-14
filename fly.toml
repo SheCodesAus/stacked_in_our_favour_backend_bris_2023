@@ -7,7 +7,7 @@ app = "winstack"
 primary_region = "syd"
 console_command = "/code/manage.py shell"
 kill_signal = "SIGINT"
-kill_timeout = "5s"
+kill_timeout = 5
 processes = []
 
 [build]
