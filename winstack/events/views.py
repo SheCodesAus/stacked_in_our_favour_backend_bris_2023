@@ -37,7 +37,7 @@ class EventDetail(APIView):
         serializer = EventDetailSerializer(event)
         return Response(serializer.data)
     
-    def put(self, request, pk):
+    def patch(self, request, pk):
         event = self.get_object(pk)
         serializer = EventDetailSerializer(event, data=request.data, partial=True)
 
