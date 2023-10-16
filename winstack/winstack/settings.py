@@ -31,6 +31,7 @@ SECRET_KEY = os.environ.get(
 #     'DJANGO_DEBUG',
 #     'False',
 # ) != 'False'
+# Update to True for debugging
 DEBUG = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
