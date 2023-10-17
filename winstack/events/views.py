@@ -28,7 +28,8 @@ class EventDetail(APIView):
     
     def get_object(self, pk):
         try:
-            return Event.objects.get(pk=pk)
+            event = Event.objects.get(pk=pk)
+            return event
         except Event.DoesNotExist:
             raise Http404
     
