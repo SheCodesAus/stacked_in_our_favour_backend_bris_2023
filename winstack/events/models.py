@@ -13,7 +13,7 @@ class Event(models.Model):
 
 
 class StickyNote(models.Model):
-    noteText = models.CharField(max_length=100)
+    noteText = models.CharField(max_length=250)
     eventId = models.ForeignKey(
         'Event',
         on_delete=models.CASCADE,
