@@ -8,6 +8,14 @@ from django.contrib.auth import get_user_model, login
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import render, redirect
+
+def landing_page(request):
+    if request.user.is_authenticated:
+        # Render the landing page for authenticated users
+        ...
+    else:
+        return redirect('user-login')
 
 class CustomUserList(APIView):
     permission_classes = [permissions.AllowAny]
@@ -61,6 +69,14 @@ class UserLoginView(APIView):
     authentication_classes = []
     permission_classes = []
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            serializer = CustomUserSerializer(user)
+            return Response({'user_data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+        
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
         password = request.data.get('password')
