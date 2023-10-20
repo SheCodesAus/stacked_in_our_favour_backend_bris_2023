@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
     is_organiser = models.BooleanField(default=False)
     bio = models.TextField(blank=True)
     birthdate = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    # profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     linkedin_profile = models.URLField(blank=True)
     github_username = models.CharField(max_length=50, blank=True)
     
