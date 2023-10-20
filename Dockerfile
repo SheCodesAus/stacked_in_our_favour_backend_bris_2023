@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.10-slim-bullseye
+ARG PYTHON_VERSION=3.11-slim-bullseye
 
 FROM python:${PYTHON_VERSION}
 
@@ -10,7 +10,6 @@ RUN mkdir -p /code
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
-
 RUN set -ex && \
     pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
@@ -18,10 +17,10 @@ RUN set -ex && \
 
 COPY winstack/ /code/
 
+ENV SECRET_KEY "fe9xYSMxHnZdYcX1L60dlQmCHf4zoYBEfuhTKhrYIbDQq5NgSu"
 RUN python manage.py collectstatic --noinput
 RUN chmod +x /code/run.sh
 
 EXPOSE 8000
 
 CMD ["/code/run.sh"]
-

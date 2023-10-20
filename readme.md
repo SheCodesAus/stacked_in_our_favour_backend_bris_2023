@@ -1,4 +1,4 @@
-# WinStack - Backend
+# WinStack - Backend DRF
 
 WinStack is a platform for the SheCodes community to share their successes, acknowledgements and thoughts related to the one-day coding workshops hosted by SheCodes by posting digital sticky notes onto an event board. 
 
