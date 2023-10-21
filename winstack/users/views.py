@@ -78,19 +78,30 @@ class UserLoginView(APIView):
             return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
         
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+            username = request.data.get('username')
+            password = request.data.get('password')
 
-        if username is None or password is None:
-            return Response({'error': 'Please provide both username and password'}, status=status.HTTP_400_BAD_REQUEST)
+            if username is None or password is None:
+                return Response({'detail': 'Please provide both username and password'}, status=status.HTTP_400_BAD_REQUEST)
 
-        User = get_user_model()
-        user = User.objects.filter(username=username).first()
+            User = get_user_model()
+            user = User.objects.filter(username=username).first()
 
-        if user and user.check_password(password):
-            login(request, user)  # Manually login the user
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            if user and user.check_password(password):
+                login(request, user)  # Manually login the user
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'detail': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+class UserRegisterView(APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = CustomUserSerializer
 
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
