@@ -92,4 +92,16 @@ class StickyNoteDetail(APIView):
     def delete(self,request, pk):
         stickyNote = self.get_object(pk)
         stickyNote.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)    
+        return Response(status=status.HTTP_204_NO_CONTENT)  
+
+class StickyNotesEvent(APIView):
+
+    def get(self, request, event_id):
+        try:
+            event = Event.objects.get(pk=event_id)
+        except Event.DoesNotExist:
+            return Response({"detail": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        sticky_notes = StickyNote.objects.filter(eventId=event)
+        serializer = StickyNoteSerializer(sticky_notes, many=True)
+        return Response(serializer.data)  
