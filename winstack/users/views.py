@@ -94,6 +94,13 @@ class UserLoginView(APIView):
             else:
                 return Response({'detail': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
             
+class UserLogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        request.auth.delete()  # This will delete the token and effectively "log out" the user.
+        return Response(status=status.HTTP_200_OK)
+            
 class UserRegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = CustomUserSerializer

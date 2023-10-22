@@ -1,4 +1,6 @@
 from django.db import models
+from users.models import CustomUser
+
 
 class Event(models.Model):
     title = models.CharField(max_length=200)

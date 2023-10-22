@@ -4,9 +4,12 @@ from django.http import Http404
 from rest_framework import status
 from .models import Event, StickyNote
 from .serializers import EventSerializer, StickyNoteSerializer, EventDetailSerializer
+from users.permissions import IsAdminUserOrReadOnly, IsEventOwnerOrReadOnly
+
 
 # Handle all events
 class EventList(APIView):
+    permission_classes = [IsAdminUserOrReadOnly]
 
     # Handles GET request
     def get(self,request):
@@ -25,6 +28,7 @@ class EventList(APIView):
 
 # Handle single-event view
 class EventDetail(APIView):
+    permission_classes = [IsAdminUserOrReadOnly, IsEventOwnerOrReadOnly]
     
     def get_object(self, pk):
         try:
