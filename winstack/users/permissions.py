@@ -28,7 +28,7 @@ class IsEventOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Allow write permissions only if user is the owner of the event
-        return obj.organiser == request.user
+        return obj.organiser == request.user or request.user.is_staff
 
 class IsAttendeeOrReadOnly(permissions.BasePermission):
     """
@@ -41,6 +41,16 @@ class IsAttendeeOrReadOnly(permissions.BasePermission):
 
         # Allow write permissions only if user is the owner of the sticky note
         return obj.creator == request.user
+    
+class IsAdminUserOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to allow only admin users.
+    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user and request.user.is_staff
+
 
 class IsSuperuser(permissions.BasePermission):
     """
