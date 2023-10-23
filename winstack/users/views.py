@@ -101,6 +101,7 @@ class UserLogoutView(APIView):
         request.auth.delete()  # This will delete the token and effectively "log out" the user.
         return Response(status=status.HTTP_200_OK)
             
+
 class UserRegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = CustomUserSerializer
@@ -109,6 +110,23 @@ class UserRegisterView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            role = request.data.get('role').lower()
+            print(f"Backend received role: {request.data.get('role')}")
+
+            # Check role and set the corresponding flags
+            if role == 'organiser':
+                serializer.validated_data['is_organiser'] = True
+                serializer.validated_data['is_attendee'] = False
+            elif role == 'attendee':
+                serializer.validated_data['is_attendee'] = True
+                serializer.validated_data['is_organiser'] = False
+            # You can add other roles here as needed.
+            print(f"Serializer validated data: {serializer.validated_data}")
+            user = serializer.save()
+
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
