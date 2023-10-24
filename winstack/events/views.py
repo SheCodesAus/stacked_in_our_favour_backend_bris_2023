@@ -28,7 +28,7 @@ class EventList(APIView):
 
 # Handle single-event view
 class EventDetail(APIView):
-    permission_classes = [IsAdminUserOrReadOnly, IsEventOwnerOrReadOnly]
+    permission_classes = [IsEventOwnerOrReadOnly]
     
     def get_object(self, pk):
         try:
