@@ -28,7 +28,7 @@ class IsEventOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Allow write permissions only if user is the owner of the event
-        return obj.organiser == request.user or request.user.is_staff
+        return request.user and request.user.is_organiser
 
 class IsAttendeeOrReadOnly(permissions.BasePermission):
     """
