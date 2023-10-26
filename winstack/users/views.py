@@ -110,8 +110,14 @@ class UserRegisterView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            role = request.data.get('role').lower()
-            print(f"Backend received role: {request.data.get('role')}")
+            role_data = request.data.get('role')  # Get the role from request data
+            if role_data is not None:
+                role = role_data.lower()  # Convert to lowercase if role_data is not None
+            else:
+                # Default role handling, you can choose what to do here
+                role = 'attendee'  # or return an error, or whatever makes sense for your application
+
+            print(f"Backend received role: {role}")
 
             # Check role and set the corresponding flags
             if role == 'organiser':
@@ -121,12 +127,11 @@ class UserRegisterView(APIView):
                 serializer.validated_data['is_attendee'] = True
                 serializer.validated_data['is_organiser'] = False
             # You can add other roles here as needed.
-            print(f"Serializer validated data: {serializer.validated_data}")
-            user = serializer.save()
 
+            print(f"Serializer validated data: {serializer.validated_data}")
+
+            user = serializer.save()  # Save the user after updating the flags
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-

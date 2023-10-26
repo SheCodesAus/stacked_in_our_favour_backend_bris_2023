@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import Event, StickyNote
 from .serializers import EventSerializer, StickyNoteSerializer, EventDetailSerializer
 from users.permissions import IsAdminUserOrReadOnly, IsEventOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated 
 
 
 # Handle all events
@@ -59,6 +60,7 @@ class EventDetail(APIView):
     
 # Handle all sticky notes
 class StickyNoteList(APIView):
+    permission_classes = [IsAuthenticated]
 
     # Handles GET request
     def get(self,request):
@@ -68,12 +70,15 @@ class StickyNoteList(APIView):
     
     # Handles POST request
     def post(self, request):
+        print("Received data:", request.data)  # Add this line for debugging
         serializer = StickyNoteSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print("Serializer errors:", serializer.errors)  # Add this line for debugging
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         
 class StickyNoteDetail(APIView):
     
