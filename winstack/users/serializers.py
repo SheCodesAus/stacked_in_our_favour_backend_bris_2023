@@ -44,4 +44,3 @@ class StickyNoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = StickyNote
         fields = '__all__'
-

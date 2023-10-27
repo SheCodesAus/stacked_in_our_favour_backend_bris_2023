@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.apps import apps
+from.models import Event
 
 
 class StickyNoteSerializer(serializers.ModelSerializer):
@@ -9,8 +10,8 @@ class StickyNoteSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = apps.get_model('events.Event')
+    class Meta:
+        model = Event
         fields = '__all__'
 
 # Event model + list of sticky notes

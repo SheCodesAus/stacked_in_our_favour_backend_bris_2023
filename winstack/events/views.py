@@ -6,6 +6,7 @@ from .models import Event, StickyNote
 from .serializers import EventSerializer, StickyNoteSerializer, EventDetailSerializer
 from users.permissions import IsAdminUserOrReadOnly, IsEventOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated 
+from users.models import CustomUser
 
 
 # Handle all events
@@ -13,36 +14,44 @@ class EventList(APIView):
     permission_classes = [IsAdminUserOrReadOnly]
 
     # Handles GET request
-    def get(self,request):
+    def get(self, request):
         events = Event.objects.all()
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
-    
+
     # Handles POST request
     def post(self, request):
+        # Check if the user creating the event is an organizer
+        user = request.user  # Get the current user
+        if not user.is_organiser:
+            return Response({"detail": "You must be an organizer to create an event."}, status=status.HTTP_403_FORBIDDEN)
+
+        print("Received data for event creation:", request.data)  # Add this line for debugging
+
         serializer = EventSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print("Serializer errors:", serializer.errors)  # Add this line for debugging
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Handle single-event view
 class EventDetail(APIView):
     permission_classes = [IsEventOwnerOrReadOnly]
-    
+
     def get_object(self, pk):
         try:
             event = Event.objects.get(pk=pk)
             return event
         except Event.DoesNotExist:
             raise Http404
-    
-    def get(self,request, pk):
+
+    def get(self, request, pk):
         event = self.get_object(pk)
         serializer = EventDetailSerializer(event)
         return Response(serializer.data)
-    
+
     def patch(self, request, pk):
         event = self.get_object(pk)
         serializer = EventDetailSerializer(event, data=request.data, partial=True)
@@ -51,9 +60,10 @@ class EventDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         else:
+            print("Serializer errors:", serializer.errors)  # Add this line for debugging
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self,request, pk):
+
+    def delete(self, request, pk):
         event = self.get_object(pk)
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
