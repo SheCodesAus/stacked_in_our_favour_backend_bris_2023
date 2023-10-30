@@ -8,6 +8,8 @@ class Event(models.Model):
     location = models.CharField(max_length=50, blank=True)
     creator = models.CharField(max_length=200)
     image = models.URLField(blank=True)
+    start_datetime = models.DateTimeField("Start Date & Time", null=True, blank=True)
+    finish_datetime = models.DateTimeField("Finish Date & Time", null=True, blank=True)
     isOpen = models.BooleanField(blank=True)
 
 

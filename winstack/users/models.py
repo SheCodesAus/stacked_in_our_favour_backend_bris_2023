@@ -21,7 +21,6 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateTimeField()
-    # Add more fields as needed
 
 class StickyNote(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

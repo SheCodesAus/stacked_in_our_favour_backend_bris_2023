@@ -86,6 +86,7 @@ class UserLoginView(APIView):
 
             User = get_user_model()
             user = User.objects.filter(username=username).first()
+            print (user,user.check_password(password),user.password)
 
             if user and user.check_password(password):
                 login(request, user)  # Manually login the user

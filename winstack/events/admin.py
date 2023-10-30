@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from .models import Event, StickyNote
-from users.models import CustomUser  # Import the CustomUser model
+from users.models import CustomUser  
 
 class EventAdminForm(forms.ModelForm):
     class Meta:
@@ -16,7 +16,7 @@ class EventAdminForm(forms.ModelForm):
 
 class EventAdmin(admin.ModelAdmin):
     form = EventAdminForm
-    list_display = ('title', 'isOpen')
+    list_display = ('title', 'isOpen', 'start_datetime', 'finish_datetime', 'creator')
     search_fields = ('title', 'creator')
 
 class StickyNoteAdmin(admin.ModelAdmin):

@@ -10,22 +10,23 @@ class CustomUserSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {'password': {'write_only': True}}
 
-def create(self, validated_data):
-    password = validated_data.pop('password')
+    def create(self, validated_data):
+        password = validated_data.pop('password')
 
-    # Retrieve the flags if they exist and remove them from validated_data
-    is_organiser = validated_data.pop('is_organiser', None)
-    is_attendee = validated_data.pop('is_attendee', None)
-    
-    user = CustomUser(**validated_data)
-    if is_organiser is not None:  # Check if the flag exists in validated_data
-        user.is_organiser = is_organiser
-    if is_attendee is not None:
-        user.is_attendee = is_attendee
-
-    user.set_password(password)
-    user.save()
-    return user
+        # Retrieve the flags if they exist and remove them from validated_data
+        is_organiser = validated_data.pop('is_organiser', None)
+        is_attendee = validated_data.pop('is_attendee', None)
+        user_object = validated_data
+        user_object["password"] = password 
+        # user = CustomUser(**validated_data)
+        if is_organiser is not None:  # Check if the flag exists in validated_data
+            user_object["is_organiser"] = is_organiser
+        if is_attendee is not None:
+            user_object["is_attendee"] = is_attendee
+            
+        user = CustomUser.objects.create_user(**user_object)
+        user.save()
+        return user
 
     
 class EventSerializer(serializers.ModelSerializer):
